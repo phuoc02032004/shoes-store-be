@@ -2,9 +2,10 @@
 const mongoose = require('mongoose');
 require('dotenv').config(); // Đảm bảo biến môi trường được load
 
+const DB_URI = process.env.MONGO_URI || 'mongodb+srv://connguaho:4CDyvX5mpNqYVerZ@mydatabase.bexnh5d.mongodb.net/'; 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+    const conn = await mongoose.connect(DB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       // useCreateIndex: true, // Không còn cần thiết từ Mongoose 6
