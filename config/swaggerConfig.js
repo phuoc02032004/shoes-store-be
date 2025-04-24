@@ -13,7 +13,7 @@ const swaggerOptions = {
     },
     servers: [ // Danh sách server API
       {
-        url: `http://localhost:${process.env.PORT || 5000}/api`, // URL gốc của API
+        url: `http://localhost:${process.env.PORT || 5000}`, // URL gốc của API
         description: 'Development server'
       },
     ],
