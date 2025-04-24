@@ -2,7 +2,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 
 const swaggerOptions = {
   definition: {
-    openapi: '3.0.0', // Version của OpenAPI Specification
+    openapi: '3.0.2', // Version của OpenAPI Specification
     info: {
       title: 'Shoe Store API',
       version: '1.0.0',
