@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const {
   getAllProducts,
   getProductById,
@@ -9,7 +10,7 @@ const {
 const { protect, authorize } = require('../middleware/authMiddleware');
 const { uploadSingleImage, handleUploadError } = require('../middleware/upload');
 
-const router = express.Router();
+const arouter = express.Router();
 
 /**
  * @swagger
