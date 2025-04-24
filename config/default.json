@@ -1,0 +1,8 @@
+{
+  "zalopay_AppId": "554",
+  "zalopay_Key1": "8NdU5pG5R2spGHGhyO99HN1OhD8IQJBn",
+  "zalopay_Key2": "uUfsWgfLkRLzq6W2uNXTCxrfxs51auny",
+  "zalopay_PaymentUrl": "https://sb-openapi.zalopay.vn/v2/create",
+  "zalopay_CallbackUrl": "YOUR_ZALOPAY_CALLBACK_URL",
+  "zalopay_MerchantId": "YOUR_ZALOPAY_MERCHANT_ID"
+}
