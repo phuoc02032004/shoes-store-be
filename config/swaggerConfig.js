@@ -13,7 +13,7 @@ const swaggerOptions = {
     },
     servers: [ // Danh sách server API
       {
-        url: `${process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : `http://localhost:${process.env.PORT || 5000}`}`, // URL gốc của API
+        url: `${process.env.VERCEL_URL ? 'https://shoes-store-be.vercel.app/' : `http://localhost:${process.env.PORT || 5000}`}`, // URL gốc của API
         description: process.env.VERCEL_URL ? 'Vercel Production' : 'Development server'
       },
     ],
