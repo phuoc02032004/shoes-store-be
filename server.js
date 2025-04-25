@@ -11,6 +11,7 @@ const cartRoutes = require('./routes/cartRoutes');
 const sizeRoutes = require('./routes/sizeRoutes'); 
 const categoryRoutes = require('./routes/categoryRoutes');
 const zalopayRoutes = require('./routes/zalopayRoutes');
+const path = require('path');
 
 
 // --- Swagger Imports ---
@@ -33,9 +34,23 @@ app.get('/', (req, res) => {
   res.send('Shoe Store API is running...');
 });
 
+// Đường dẫn tới swagger.json
+app.get('/api-docs/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
 // --- Swagger UI Route ---
+// Cấu hình Swagger UI options
+const swaggerUiOptions = {
+  explorer: true,
+  swaggerOptions: {
+    url: '/api-docs/swagger.json',
+  },
+};
+
 // Phục vụ giao diện Swagger UI tại /api-docs
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
 // --- End Swagger UI Route ---
 
 
