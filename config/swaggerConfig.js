@@ -13,7 +13,7 @@ const swaggerOptions = {
     },
     servers: [ // Danh sách server API
       {
-        url: '/',
+        url: '/api',
         description: 'Current server (relative path)'
       },
     ],

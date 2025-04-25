@@ -26,7 +26,7 @@ const order = {
     embed_data: JSON.stringify(embed_data),
     amount: 50000,
     description: `Lazada - Payment for the order #${transID}`,
-    bank_code: "zalopayapp",
+    bank_code: "",
 };
 
 // appid|app_trans_id|appuser|amount|apptime|embeddata|item

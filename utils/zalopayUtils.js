@@ -39,7 +39,6 @@ const createAndSendPaymentRequest = async (amount, orderId, description, items =
             embed_data: JSON.stringify(embed_data),
             amount: amount,
             description: description || `Thanh toán đơn hàng #${orderId}`,
-            bank_code: "zalopayapp", // This can be passed as a parameter if needed
             callback_url: `${process.env.API_URL}/api/orders/zalopay-callback` // URL to receive payment notifications
         };
 
