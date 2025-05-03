@@ -16,6 +16,7 @@
       "dest": "/server.js"
     }
   ],
+  
   "headers": [
     {
       "source": "/(.*)",
