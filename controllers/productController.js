@@ -72,6 +72,12 @@ exports.getAllProducts = async (req, res, next) => {
     if (req.query.brand) {
       filter.brand = req.query.brand;
     }
+    if (req.query.isOnSale === 'true') {
+      filter.isOnSale = true;
+    }
+    if (req.query.isPopular === 'true') {
+      filter.isPopular = true;
+    }
     // Thêm các bộ lọc khác nếu cần (price range, isNew,...)
 
     // Xây dựng tùy chọn sắp xếp (sort)
