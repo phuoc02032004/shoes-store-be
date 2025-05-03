@@ -3,6 +3,7 @@ const router = express.Router();
 const {
     getCategories,
     getCategoryById,
+    getSubcategories,
     createCategory,
     updateCategory,
     deleteCategory,
@@ -34,6 +35,9 @@ const { protect, authorize } = require('../middleware/authMiddleware');
  *         image:
  *           type: string
  *           description: Optional URL of an image representing the category
+ *         parentCategory:
+ *           type: string
+ *           description: ID of the parent category (null if it's a root category)
  *         isActive:
  *           type: boolean
  *           description: Whether the category is active
@@ -45,12 +49,18 @@ const { protect, authorize } = require('../middleware/authMiddleware');
  *           type: string
  *           format: date-time
  *           description: Timestamp of last update
+ *         subcategories:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Category'
+ *           description: Virtual field - Array of subcategories (when populated)
  *       example:
  *         _id: 60d0fe4f5311236168a109cb
- *         name: 'Running'
- *         slug: 'running'
- *         description: 'Shoes designed for running.'
- *         image: 'http://example.com/running.jpg'
+ *         name: 'Sandal'
+ *         slug: 'sandal'
+ *         description: 'All types of sandals.'
+ *         image: 'http://example.com/sandals.jpg'
+ *         parentCategory: null
  *         isActive: true
  *         createdAt: '2023-01-01T12:00:00.000Z'
  *         updatedAt: '2023-01-01T12:30:00.000Z'
@@ -74,9 +84,13 @@ const { protect, authorize } = require('../middleware/authMiddleware');
  *               image:
  *                 type: string
  *                 description: Optional image URL
+ *               parentCategory:
+ *                 type: string
+ *                 description: ID of the parent category (optional)
  *             example:
- *               name: 'Casual'
- *               description: 'Everyday wear shoes.'
+ *               name: 'Men Sandal'
+ *               description: 'Sandals for men.'
+ *               parentCategory: '60d0fe4f5311236168a109cb'
  *
  *     CategoryUpdateInput:
  *       required: true
@@ -94,12 +108,16 @@ const { protect, authorize } = require('../middleware/authMiddleware');
  *               image:
  *                 type: string
  *                 description: New image URL
+ *               parentCategory:
+ *                 type: string
+ *                 description: ID of the parent category (null to make it a root category)
  *               isActive:
  *                 type: boolean
  *                 description: New active status
  *             example:
- *               description: 'Comfortable shoes for daily use.'
- *               isActive: false
+ *               description: 'Comfortable sandals for men.'
+ *               parentCategory: '60d0fe4f5311236168a109cb'
+ *               isActive: true
  *
  * tags:
  *   name: Categories
@@ -113,6 +131,17 @@ const { protect, authorize } = require('../middleware/authMiddleware');
  *   get:
  *     summary: Returns the list of all categories
  *     tags: [Categories]
+ *     parameters:
+ *       - in: query
+ *         name: rootOnly
+ *         schema:
+ *           type: boolean
+ *         description: If true, only return root categories (no parent)
+ *       - in: query
+ *         name: includeSubcategories
+ *         schema:
+ *           type: boolean
+ *         description: If true, populate subcategories
  *     responses:
  *       200:
  *         description: The list of categories
@@ -158,6 +187,11 @@ router.route('/').get(getCategories).post(protect, authorize('admin'), createCat
  *           type: string
  *         required: true
  *         description: The category id
+ *       - in: query
+ *         name: includeSubcategories
+ *         schema:
+ *           type: boolean
+ *         description: If true, populate subcategories
  *     responses:
  *       200:
  *         description: The category description by id
@@ -208,6 +242,11 @@ router.route('/').get(getCategories).post(protect, authorize('admin'), createCat
  *           type: string
  *         required: true
  *         description: The category id
+ *       - in: query
+ *         name: force
+ *         schema:
+ *           type: boolean
+ *         description: If true, force delete even if it has subcategories
  *     responses:
  *       200:
  *         description: The category was deleted
@@ -223,5 +262,30 @@ router
     .get(getCategoryById)
     .put(protect, authorize('admin'), updateCategory)
     .delete(protect, authorize('admin'), deleteCategory);
+
+/**
+ * @swagger
+ * /categories/{id}/subcategories:
+ *   get:
+ *     summary: Get all subcategories of a specific category
+ *     tags: [Categories]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The parent category id
+ *     responses:
+ *       200:
+ *         description: List of subcategories
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Category'
+ */
+router.route('/:id/subcategories').get(getSubcategories);
 
 module.exports = router;

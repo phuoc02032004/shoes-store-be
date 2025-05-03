@@ -25,12 +25,12 @@ const categorySchema = new mongoose.Schema(
     image: {
       type: String, // URL ảnh đại diện cho danh mục (tùy chọn)
     },
-    // Ví dụ về danh mục cha (nếu bạn có cấu trúc đa cấp)
-    // parentCategory: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Category',
-    //   default: null
-    // },
+    // Danh mục cha (cho cấu trúc đa cấp)
+    parentCategory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      default: null
+    },
     isActive: {
       type: Boolean,
       default: true, // Mặc định là hoạt động
@@ -53,13 +53,13 @@ const categorySchema = new mongoose.Schema(
 //   next();
 // });
 
-// --- (Tùy chọn) Virtual property để lấy các danh mục con ---
-// categorySchema.virtual('subcategories', {
-//   ref: 'Category',
-//   localField: '_id',
-//   foreignField: 'parentCategory',
-//   justOne: false
-// });
+// Virtual property để lấy các danh mục con
+categorySchema.virtual('subcategories', {
+  ref: 'Category',
+  localField: '_id',
+  foreignField: 'parentCategory',
+  justOne: false
+});
 
 const Category = mongoose.model('Category', categorySchema);
 

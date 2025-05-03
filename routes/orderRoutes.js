@@ -92,7 +92,7 @@ router.get('/', protect, authorize('admin'), getAllOrders);
 // Lấy đơn hàng của chính người dùng
 /**
  * @swagger
- * /api/orders/myorders:
+ * /orders/myorders:
  *   get:
  *     summary: Lấy danh sách đơn hàng của người dùng đang đăng nhập
  *     tags: [Orders]
